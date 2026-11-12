@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d18">
+  <meta name="description" content="NEURAL WEB AI — turn ideas into responsive websites with AI.">
+  <title>NEURAL WEB AI — Build at the speed of thought</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="NEURAL WEB AI home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>NEURAL<span class="brand-light">WEB</span><small>AI STUDIO</small></span>
+      </a>
+      <div class="topbar-center"><span class="status-dot"></span> AI WORKSPACE <span class="topbar-divider">/</span> <span class="muted">NEW PROJECT</span></div>
+      <div class="topbar-actions">
+        <button class="button button-ghost" id="settingsButton" type="button">Settings</button>
+        <a class="button button-primary button-small" href="https://github.com/adeeshadasuniduwara/NEURAL-WEB-AI" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span> YOUR IDEAS, BUILT BY AI</div>
+        <h1>Build something<br><span class="gradient-text">extraordinary.</span></h1>
+        <p class="hero-copy">Describe the website you imagine. Let AI turn your words into a responsive, ready-to-edit experience.</p>
+      </section>
+
+      <section class="workspace">
+        <aside class="prompt-panel panel">
+          <div class="panel-heading"><div><span class="step-label">01 / CREATE</span><h2>What are we building?</h2></div><span class="sparkle">✳</span></div>
+          <label class="field-label" for="promptInput">DESCRIBE YOUR WEBSITE</label>
+          <textarea id="promptInput" placeholder="A modern portfolio website for a photographer. Dark background, elegant typography, gallery grid, about section and a contact form..." rows="7"></textarea>
+          <div class="prompt-hint"><span>Be specific for better results</span><span id="charCount">0 / 2,000</span></div>
+          <div class="field-label examples-label">QUICK START</div>
+          <div class="example-list">
+            <button class="example-chip" data-prompt="A premium dark-mode trading dashboard with a watchlist, price cards, market overview and responsive layout.">Trading dashboard <span>↗</span></button>
+            <button class="example-chip" data-prompt="A clean modern portfolio website for a creative designer, with a bold hero, selected projects, about section and contact form.">Creative portfolio <span>↗</span></button>
+            <button class="example-chip" data-prompt="A stylish coffee shop website with a warm color palette, menu cards, opening hours, location and online booking call to action.">Coffee shop <span>↗</span></button>
+          </div>
+          <button class="button button-generate" id="generateButton" type="button"><span>✦</span> Generate website <span class="button-arrow">→</span></button>
+          <p class="secure-note"><span>▣</span> Your API key stays on the server. Never add secrets to frontend code.</p>
+        </aside>
+
+        <section class="preview-panel panel">
+          <div class="preview-toolbar">
+            <div class="view-tabs"><button class="view-tab active" data-view="preview">Preview</button><button class="view-tab" data-view="code">Code</button></div>
+            <div class="preview-actions">
+              <div class="device-switch" aria-label="Preview size"><button class="device-button active" data-device="desktop" title="Desktop">▰</button><button class="device-button" data-device="tablet" title="Tablet">▯</button><button class="device-button" data-device="mobile" title="Mobile">▯</button></div>
+              <button class="icon-button" id="refreshButton" title="Refresh preview" aria-label="Refresh preview">↻</button>
+              <button class="button button-ghost button-small" id="downloadButton" disabled>↓ Export HTML</button>
+            </div>
+          </div>
+          <div class="preview-stage" id="previewStage">
+            <div class="empty-state" id="emptyState">
+              <div class="empty-orbit"><span>✳</span><i></i><b></b></div>
+              <h3>Your canvas is waiting.</h3>
+              <p>Your generated website will appear here.<br>Start with a prompt on the left.</p>
+              <div class="empty-shortcut"><kbd>✦</kbd> AI-powered generation</div>
+            </div>
+            <iframe id="previewFrame" title="Generated website preview" sandbox="allow-scripts allow-forms allow-modals allow-popups" hidden></iframe>
+          </div>
+          <div class="code-stage" id="codeStage" hidden>
+            <div class="code-toolbar"><span id="codeFilename">index.html</span><button class="button button-ghost button-small" id="copyCodeButton">Copy code</button></div>
+            <textarea id="codeEditor" spellcheck="false" aria-label="Generated HTML code" placeholder="Your generated HTML will appear here..."></textarea>
+          </div>
+          <div class="preview-footer"><span><i class="live-dot"></i> <span id="workspaceStatus">Ready for your first build</span></span><span>NEURAL ENGINE <b>01</b></span></div>
+        </section>
+      </section>
+      <footer class="footer"><span>© 2026 NEURAL WEB AI</span><span>DESIGNED TO MAKE BUILDING FEEL LIKE MAGIC <b>✳</b></span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="settingsDialog" class="settings-dialog">
+    <form method="dialog" class="dialog-head"><div><span class="step-label">CONFIGURATION</span><h2>Workspace settings</h2></div><button class="icon-button" aria-label="Close">×</button></form>
+    <div class="dialog-content">
+      <label class="field-label" for="apiEndpoint">AI API ENDPOINT</label>
+      <input id="apiEndpoint" type="url" placeholder="https://your-worker.example.workers.dev/generate">
+      <p class="settings-help">Enter the URL of your secured AI proxy. The default is /api/generate. Do not paste an API key here.</p>
+      <button class="button button-generate" id="saveSettingsButton" type="button">Save settings <span>→</span></button>
+    </div>
+  </dialog>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="src/app.js" defer></script>
+</body>
+</html>
